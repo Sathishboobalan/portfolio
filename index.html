@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sathish Boobalan | Full Stack Developer</title>
+
+  <!-- Favicon via CDN (SVG inline) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23C84B31'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='bold' font-size='12' fill='white'%3ESB%3C/text%3E%3C/svg%3E">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome 6 (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- AOS Animate on Scroll (CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+  <!-- Portfolio Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ── PAGE LOADER ── -->
+<div id="page-loader">
+  <div class="loader-logo"><span class="lb">&lt;</span>SB<span class="lb">/&gt;</span></div>
+  <div class="loader-bar-wrap"><div class="loader-bar" id="loaderBar"></div></div>
+  <div class="loader-pct-row">
+    <span class="loader-pct" id="loaderPct">0%</span>
+    <span class="loader-label">Loading...</span>
+  </div>
+</div>
+
+<!-- ── COLOR PICKER ── -->
+<div class="color-panel">
+  <div class="color-panel-popup" id="colorPopup">
+    <div class="cp-title">Accent Color</div>
+    <div class="cp-presets" id="cpPresets"></div>
+    <div class="cp-custom">
+      <label>Custom color</label>
+      <input type="color" id="colorPickerInput" value="#C84B31" oninput="applyAccent(this.value)">
+    </div>
+    <div class="cp-reset" onclick="applyAccent('#C84B31');document.getElementById('colorPickerInput').value='#C84B31'">↺ Reset to default</div>
+  </div>
+  <button class="color-panel-btn" id="colorPanelBtn" onclick="toggleColorPanel()" title="Customize accent color">
+    <i class="fas fa-palette"></i>
+  </button>
+</div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <button class="logo" onclick="navTo('home')"><span class="lb">&lt;</span>SB<span class="lb">/&gt;</span></button>
+    <ul class="nav-links">
+      <li><button class="nav-link" data-section="home"       onclick="navTo('home')">Home</button></li>
+      <li><button class="nav-link" data-section="about"      onclick="navTo('about')">About</button></li>
+      <li><button class="nav-link" data-section="skills"     onclick="navTo('skills')">Skills</button></li>
+      <li><button class="nav-link" data-section="experience" onclick="navTo('experience')">Experience</button></li>
+      <li><button class="nav-link" data-section="projects"   onclick="navTo('projects')">Projects</button></li>
+      <li><button class="nav-link" data-section="testimonials" onclick="navTo('testimonials')">Reviews</button></li>
+      <li><button class="nav-link" data-section="resume"     onclick="navTo('resume')">Resume</button></li>
+      <li><button class="nav-link" data-section="contact"    onclick="navTo('contact')">Contact</button></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeBtn" onclick="toggleTheme()"><i class="fas fa-moon"></i></button>
+      <button class="hire-btn" onclick="navTo('contact')">Hire Me</button>
+      <button class="hamburger" id="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><button class="mobile-link" data-section="home"       onclick="navTo('home');closeMobile()">Home</button></li>
+      <li><button class="mobile-link" data-section="about"      onclick="navTo('about');closeMobile()">About</button></li>
+      <li><button class="mobile-link" data-section="skills"     onclick="navTo('skills');closeMobile()">Skills</button></li>
+      <li><button class="mobile-link" data-section="experience" onclick="navTo('experience');closeMobile()">Experience</button></li>
+      <li><button class="mobile-link" data-section="projects"   onclick="navTo('projects');closeMobile()">Projects</button></li>
+      <li><button class="mobile-link" data-section="testimonials" onclick="navTo('testimonials');closeMobile()">Reviews</button></li>
+      <li><button class="mobile-link" data-section="resume"     onclick="navTo('resume');closeMobile()">Resume</button></li>
+      <li><button class="mobile-link" data-section="contact"    onclick="navTo('contact');closeMobile()">Contact</button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="home" class="hero-section">
+  <div class="hero-bg"><div class="grid-lines"></div><div class="orb orb-1"></div><div class="orb orb-2"></div></div>
+  <div class="container hero-content">
+    <div class="hero-left">
+      <div class="hero-badge"><span class="badge-dot"></span> Available for new opportunities</div>
+      <h1 class="hero-name">Hi, I'm <span class="accent">Sathish</span><br><span class="hero-surname">Boobalan</span></h1>
+      <div class="hero-role"><span class="role-text" id="typed"></span><span class="cursor">|</span></div>
+      <p class="hero-bio">Full Stack Developer with 4+ years of expertise in Java Spring Boot, Angular and enterprise healthcare applications. Proven ability to deliver scalable claim adjudication systems and dynamic business automation platforms.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num" id="yearsExp">4+</span><span class="stat-label">Years Experience</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Projects Delivered</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">2</span><span class="stat-label">Companies</span></div>
+      </div>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="navTo('projects')"><i class="fas fa-eye"></i> View My Work</button>
+        <button class="btn-outline" onclick="navTo('resume')"><i class="fas fa-file-alt"></i> Download CV</button>
+      </div>
+      <div class="hero-socials">
+        <a href="https://github.com/sathishboobalan" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/sathishboobalan/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="/cdn-cgi/l/email-protection#770416031f1e041f15161b02140437101a161e1b5914181a"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-avatar-wrap">
+        <div class="avatar-ripple"></div><div class="avatar-ripple"></div><div class="avatar-ripple"></div>
+        <div class="avatar-ring"></div><div class="avatar-ring ring-2"></div><div class="avatar-ring ring-3"></div>
+        <div class="avatar-photo-wrap">
+          <div class="avatar-photo-inner">
+            <img src="assets/images/profile.png" alt="Sathish Boobalan" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:50%;display:block">
+          </div>
+          <div class="avatar-hover-overlay"><i class="fas fa-user-circle"></i><span>Sathish Boobalan</span></div>
+        </div>
+        <div class="floating-chip chip-java"><i class="fab fa-java"></i> Java</div>
+        <div class="floating-chip chip-spring"><i class="fas fa-leaf"></i> Spring Boot</div>
+        <div class="floating-chip chip-angular"><i class="fab fa-angular"></i> Angular</div>
+        <div class="floating-chip chip-sql"><i class="fas fa-database"></i> SQL</div>
+      </div>
+    </div>
+  </div>
+  <button class="scroll-hint" onclick="navTo('about')"><i class="fas fa-chevron-down"></i></button>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about" class="section about-section">
+  <div class="container">
+    <div class="about-grid" data-aos="fade-up" data-aos-duration="700">
+      <div>
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">Passionate About<br><span class="accent">Clean Engineering</span></h2>
+        <p class="about-body">I'm a Full Stack Developer based in Chennai with <strong>5+ years</strong> of hands-on experience building enterprise-grade web applications. My expertise spans Java Spring Boot backends, Angular frontends, and SQL stored procedures — with a strong focus on healthcare technology.</p>
+        <p class="about-body" style="margin-top:16px">Currently at <strong>UST HealthProof</strong>, I work on Workflow+, a critical claim adjudication platform used in the healthcare insurance domain. I'm passionate about clean architecture, performance optimisation, and delivering quality software that drives real business value.</p>
+        <div class="info-grid">
+          <div class="info-item"><span class="info-label"><i class="fas fa-map-marker-alt"></i> Location</span><span class="info-value">Chennai, Tamil Nadu</span></div>
+          <div class="info-item"><span class="info-label"><i class="fas fa-envelope"></i> Email</span><span class="info-value"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c6b5a7b2aeafb5aea4a7aab3a5b586a1aba7afaae8a5a9ab">[email&#160;protected]</a></span></div>
+          <div class="info-item"><span class="info-label"><i class="fas fa-phone"></i> Phone</span><span class="info-value">+91 88258 71070</span></div>
+          <div class="info-item"><span class="info-label"><i class="fas fa-briefcase"></i> Experience</span><span class="info-value">5+ Years</span></div>
+          <div class="info-item"><span class="info-label"><i class="fas fa-language"></i> Languages</span><span class="info-value">Tamil, English</span></div>
+          <div class="info-item"><span class="info-label"><i class="fas fa-graduation-cap"></i> Degree</span><span class="info-value">B.E. Computer Science</span></div>
+        </div>
+      </div>
+      <div class="about-right">
+        <div class="about-card">
+          <div class="card-header"><i class="fas fa-graduation-cap card-icon"></i> Education</div>
+          <div class="edu-degree">B.E. Computer Science Engineering</div>
+          <div class="edu-inst">K.S.R. College of Engineering, Tiruchengode</div>
+          <div class="edu-meta"><span><i class="fas fa-calendar-alt"></i> 2016 – 2020</span><span class="tag">8.89 / 10 GPA</span></div>
+        </div>
+        <div class="about-card">
+          <div class="card-header"><i class="fas fa-trophy card-icon"></i> Achievements</div>
+          <div class="cert-item">
+            <div class="cert-badge"><i class="fas fa-rocket"></i></div>
+            <div><div class="cert-name">20% Improvement in System Scalability</div><div class="cert-issuer-text">Achieved increased load handling more efficiently · Stradegi</div></div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-badge"><i class="fas fa-bolt"></i></div>
+            <div><div class="cert-name">30% Boost in Application Performance</div><div class="cert-issuer-text">Improved speed and responsiveness · Stradegi</div></div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-badge"><i class="fas fa-bug"></i></div>
+            <div><div class="cert-name">25% Reduction in System Errors</div><div class="cert-issuer-text">More stable and user-friendly application · Stradegi</div></div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-badge"><i class="fas fa-award"></i></div>
+            <div><div class="cert-name">Shining Star — R&amp;R Award</div><div class="cert-issuer-text">Recognised by Manager · UST HealthProof · 2024</div></div>
+          </div>
+        </div>
+        <div class="about-card">
+          <div class="card-header"><i class="fas fa-star-half-alt card-icon"></i> Strengths</div>
+          <div class="cert-item">
+            <div class="cert-badge"><i class="fas fa-layer-group"></i></div>
+            <div><div class="cert-name">Technology Adaptability</div><div class="cert-issuer-text">Quick to learn and adapt to new technologies, languages and frameworks</div></div>
+          </div>
+          <div class="cert-item">
+            <div class="cert-badge"><i class="fas fa-users"></i></div>
+            <div><div class="cert-name">Team Collaboration</div><div class="cert-issuer-text">Skilled in cross-functional collaboration with clear communication</div></div>
+          </div>
+        </div>
+        <div class="numbers-row">
+          <div class="number-card"><span class="n-val">5+</span><span class="n-label">Years Exp.</span></div>
+          <div class="number-card"><span class="n-val">25%</span><span class="n-label">Bug Reduction</span></div>
+          <div class="number-card"><span class="n-val">30%</span><span class="n-label">Perf. Boost</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills" class="section skills-section">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up" data-aos-duration="600">
+      <p class="section-label">Skills & Expertise</p>
+      <h2 class="section-title">My Technical <span class="accent">Toolkit</span></h2>
+      <p class="section-subtitle">5+ years building with Java, Spring Boot, Angular and SQL across fintech and healthcare domains.</p>
+    </div>
+    <div class="marquee-wrap"><div class="marquee-track" id="marqueeTrack"></div></div>
+    <div class="category-tabs" id="categoryTabs"></div>
+    <div class="skills-grid" id="skillsGrid"></div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience" class="section experience-section">
+  <div class="container">
+    <p class="section-label">Work History</p>
+    <h2 class="section-title">Professional <span class="accent">Experience</span></h2>
+    <p class="section-subtitle">4+ years of progressive growth across enterprise product companies.</p>
+    <div class="exp-layout" data-aos="fade-up" data-aos-duration="700">
+      <div class="exp-sidebar" id="expSidebar"></div>
+      <div id="expDetail"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects" class="section projects-section">
+  <div class="container">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+    <p class="section-subtitle">Enterprise applications and internal tools delivered across healthcare and business automation domains.</p>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="projects-grid" id="projectsGrid" data-aos="fade-up" data-aos-duration="700"></div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials" class="section testimonials-section">
+  <div class="container">
+    <p class="section-label">What People Say</p>
+    <h2 class="section-title">Trusted by <span class="accent">Colleagues</span></h2>
+    <p class="section-subtitle">Feedback from managers, leads and teammates I've had the pleasure of working with.</p>
+
+    <!-- Carousel wrapper -->
+    <div class="carousel-outer" id="testimonialCarousel" data-aos="fade-up" data-aos-duration="700">
+      <div class="carousel-track-wrap">
+        <div class="carousel-track" id="carouselTrack">
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">&ldquo;</div>
+            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="testimonial-text">Sathish consistently delivered high-quality features on the Workflow+ platform. His ownership mindset and ability to handle claim adjudication workflows earned him the Shining Star recognition.</p>
+            <div class="testimonial-author"><div class="testimonial-avatar">AM</div><div><div class="testimonial-name">Anand M.</div><div class="testimonial-role">Engineering Manager</div><div class="testimonial-company">UST HealthProof</div></div></div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">&ldquo;</div>
+            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="testimonial-text">One of the most reliable developers I've worked with. Sathish led the Java Spring Boot migration and delivered a 30% performance boost. His attention to code quality is exceptional.</p>
+            <div class="testimonial-author"><div class="testimonial-avatar">RK</div><div><div class="testimonial-name">Ramesh K.</div><div class="testimonial-role">Technical Lead</div><div class="testimonial-company">Stradegi Solutions</div></div></div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">&ldquo;</div>
+            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+            <p class="testimonial-text">Sathish has a great grasp of both frontend and backend architecture. He developed the Rule Hierarchy module from scratch and mentored the team with clear explanations and patience.</p>
+            <div class="testimonial-author"><div class="testimonial-avatar">PS</div><div><div class="testimonial-name">Priya S.</div><div class="testimonial-role">Senior Developer</div><div class="testimonial-company">Stradegi Solutions</div></div></div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">&ldquo;</div>
+            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="testimonial-text">Working with Sathish on the Auditor and Examiner modules was a great experience. He understood the business domain quickly and translated requirements into clean, working code with minimal rework.</p>
+            <div class="testimonial-author"><div class="testimonial-avatar">VN</div><div><div class="testimonial-name">Vijay N.</div><div class="testimonial-role">Product Owner</div><div class="testimonial-company">UST HealthProof</div></div></div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">&ldquo;</div>
+            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+            <p class="testimonial-text">Sathish is a collaborative team player who always supports his colleagues. His troubleshooting skills saved our team countless hours and his Agile discipline helped us stay on track every sprint.</p>
+            <div class="testimonial-author"><div class="testimonial-avatar">DL</div><div><div class="testimonial-name">Divya L.</div><div class="testimonial-role">Scrum Master</div><div class="testimonial-company">UST HealthProof</div></div></div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-quote-icon">&ldquo;</div>
+            <div class="testimonial-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+            <p class="testimonial-text">Sathish brings both technical depth and a problem-solving mindset to every project. His data migration work with thorough business validation was critical for our product launch success.</p>
+            <div class="testimonial-author"><div class="testimonial-avatar">SK</div><div><div class="testimonial-name">Suresh K.</div><div class="testimonial-role">Project Manager</div><div class="testimonial-company">Stradegi Solutions</div></div></div>
+          </div>
+
+        </div>
+      </div>
+      <div class="carousel-progress"><div class="carousel-progress-bar" id="carouselProgress"></div></div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carouselPrev"><i class="fas fa-chevron-left"></i></button>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-btn" id="carouselNext"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESUME ── -->
+<section id="resume" class="section resume-section">
+  <div class="container">
+    <div class="resume-header-row">
+      <div>
+        <p class="section-label">Resume</p>
+        <h2 class="section-title">My <span class="accent">Resume</span></h2>
+      </div>
+      <button class="btn-primary" id="downloadBtn" onclick="downloadResume()"><i class="fas fa-download"></i> Download PDF</button>
+    </div>
+
+    <!-- ── RESUME PREVIEW CARD (matches PDF exactly) ── -->
+    <div class="resume-card" data-aos="fade-up" data-aos-duration="800">
+      <!-- Header -->
+      <div class="rv-header-wrap">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+          <div>
+            <div class="rv-name">Sathish Boobalan</div>
+            <div class="rv-title-line">
+              <span class="rv-title">Full Stack Developer</span>
+            </div>
+          </div>
+          <div class="rv-contact-row" style="flex-direction:column;align-items:flex-end;gap:4px">
+            <div class="rv-contact-item"><i class="fas fa-phone"></i> +91 88258 71070</div>
+            <div class="rv-contact-item"><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8bf8eaffe3e2f8e3e9eae7fee8f8cbece6eae2e7a5e8e4e6">[email&#160;protected]</a></div>
+            <div class="rv-contact-item"><i class="fab fa-linkedin-in"></i> linkedin.com/in/sathishboobalan</div>
+            <div class="rv-contact-item"><i class="fas fa-map-marker-alt"></i> Chennai, India</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Body grid: main | sidebar -->
+      <div class="rv-body-grid">
+
+        <!-- MAIN COLUMN -->
+        <div>
+          <!-- Summary -->
+          <div class="rv-section">
+            <div class="rv-section-title">Professional Summary</div>
+            <p class="rv-summary">Experienced Full Stack Software Developer with 5+ years, specializing in Java, Spring Boot, JavaScript, and Angular. Proven track record in designing, developing, and deploying robust web applications. Adept collaborator across the development lifecycle, excelling in crafting intuitive front-end interfaces and efficient server-side applications. Ready to contribute seasoned skills to dynamic software projects.</p>
+          </div>
+
+          <!-- Experience -->
+          <div class="rv-section">
+            <div class="rv-section-title">Work Experience</div>
+
+            <div class="rv-exp">
+              <div class="rv-exp-header">
+                <div>
+                  <div class="rv-exp-role">Technical Analyst — Full Stack Developer</div>
+                  <div class="rv-exp-company">UST HealthProof &bull; Chennai <span class="current-badge">Current</span></div>
+                </div>
+                <div class="rv-exp-date">Apr 2024 – Present</div>
+              </div>
+              <p style="font-size:.83rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">
+                <strong>Workflow+</strong> — Enterprise claim adjudication platform syncing data from Health Rules Payer (HRP). Supports multi-role workflows: Examiner, Auditor, Manager, Lead, MQO (Manager Quality Operations), Ops Governor and Admin.
+              </p>
+              <ul class="rv-bullets">
+                <li>Developed and maintained Spring Boot APIs driving claim processing workflows with role-based access for 7+ user roles</li>
+                <li>Built Examiner module enabling claim processing and rebuttal submission; Auditor module for claim audit, fail, accept/reject rebuttal flows</li>
+                <li>Implemented MQO auditing side workflows and Ops Governor dashboard for cross-status governance</li>
+                <li>Engineered SQL Stored Procedures for claim data sync from HRP and workflow state management</li>
+                <li>Developed role-specific reports and dashboards for Manager, Lead, Auditor and Ops Governor</li>
+              </ul>
+              <div class="rv-tech-tags">
+                <span class="r-tag">Java</span><span class="r-tag">Spring Boot</span><span class="r-tag">SQL Stored Procs</span>
+                <span class="r-tag">Angular</span><span class="r-tag">REST API</span><span class="r-tag">IntelliJ IDEA</span>
+              </div>
+            </div>
+
+            <div class="rv-exp">
+              <div class="rv-exp-header">
+                <div>
+                  <div class="rv-exp-role">Technical Analyst</div>
+                  <div class="rv-exp-company">Stradegi Solutions &bull; Chennai</div>
+                </div>
+                <div class="rv-exp-date">Oct 2020 – Mar 2024</div>
+              </div>
+              <p style="font-size:.83rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px">
+                <strong>nFlows</strong> — No-code business automation platform supporting dynamic entity, workflow and rule construction with cross-module integration.
+              </p>
+              <ul class="rv-bullets">
+                <li>Led migration from core Java to Spring Boot, creating foundational architecture and common data helper utilities</li>
+                <li>Designed and maintained Rule Hierarchy and Common Landing Page modules with graph-view data display</li>
+                <li>Managed complex dynamic module workflows serving as the application core; later optimised for performance</li>
+                <li>Developed Role Manager, User Preference and Support modules; executed end-to-end data migration with business validations</li>
+                <li>Achieved <strong>20% improvement</strong> in system scalability and <strong>30% boost</strong> in application performance</li>
+              </ul>
+              <p style="font-size:.83rem;color:var(--text-secondary);line-height:1.6;margin:8px 0"><strong>Pro Hunt</strong> — Internal interview management platform for scheduling, evaluation and candidate assessment.</p>
+              <ul class="rv-bullets">
+                <li>Developed question bank, test result computation by weightage, and result notification emails</li>
+                <li>Built Spring Boot API endpoints for seamless client-server communication</li>
+              </ul>
+              <div class="rv-tech-tags">
+                <span class="r-tag">Java</span><span class="r-tag">Spring Boot</span><span class="r-tag">JavaScript</span>
+                <span class="r-tag">Angular</span><span class="r-tag">Bootstrap</span><span class="r-tag">SQL</span>
+                <span class="r-tag">OOP / SOLID</span><span class="r-tag">Microservices</span><span class="r-tag">IntelliJ IDEA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education -->
+          <div class="rv-section">
+            <div class="rv-section-title">Education</div>
+            <div class="rv-edu-degree">B.E. Computer Science Engineering</div>
+            <div class="rv-edu-inst">K.S.R. College of Engineering, Tiruchengode</div>
+            <div class="rv-edu-meta">2016 – 2020 &bull; GPA: 8.89 / 10</div>
+          </div>
+        </div>
+
+        <!-- SIDEBAR COLUMN -->
+        <div>
+          <!-- Award highlight REMOVED -->
+
+          <div class="rv-section">
+            <div class="rv-section-title sidebar">Core Skills</div>
+            <div class="rv-skill-item"><div class="rv-skill-row"><span>Java / Spring Boot</span><span class="rv-pct">90%</span></div><div class="rv-bar-track"><div class="rv-bar-fill" style="width:90%"></div></div></div>
+            <div class="rv-skill-item"><div class="rv-skill-row"><span>SQL / Stored Procs</span><span class="rv-pct">88%</span></div><div class="rv-bar-track"><div class="rv-bar-fill" style="width:88%"></div></div></div>
+            <div class="rv-skill-item"><div class="rv-skill-row"><span>REST APIs</span><span class="rv-pct">90%</span></div><div class="rv-bar-track"><div class="rv-bar-fill" style="width:90%"></div></div></div>
+            <div class="rv-skill-item"><div class="rv-skill-row"><span>JavaScript</span><span class="rv-pct">80%</span></div><div class="rv-bar-track"><div class="rv-bar-fill" style="width:80%"></div></div></div>
+            <div class="rv-skill-item"><div class="rv-skill-row"><span>Angular</span><span class="rv-pct">65%</span></div><div class="rv-bar-track"><div class="rv-bar-fill" style="width:65%"></div></div></div>
+            <div class="rv-skill-item"><div class="rv-skill-row"><span>Microservices</span><span class="rv-pct">78%</span></div><div class="rv-bar-track"><div class="rv-bar-fill" style="width:78%"></div></div></div>
+          </div>
+
+          <div class="rv-section">
+            <div class="rv-section-title sidebar">Tools & Principles</div>
+            <div class="rv-tags">
+              <span class="r-tag">IntelliJ IDEA</span><span class="r-tag">Eclipse IDE</span><span class="r-tag">VS Code</span>
+              <span class="r-tag">Git</span><span class="r-tag">GitHub Desktop</span><span class="r-tag">OOP</span>
+              <span class="r-tag">SOLID</span><span class="r-tag">Stream API</span><span class="r-tag">Agile</span>
+              <span class="r-tag">Bootstrap</span><span class="r-tag">Neo4J</span>
+            </div>
+          </div>
+
+          <div class="rv-section">
+            <div class="rv-section-title sidebar">Achievements</div>
+            <div class="rv-cert-item">
+              <span style="color:var(--accent);font-size:.85rem;flex-shrink:0;margin-top:2px"><i class="fas fa-award"></i></span>
+              <div><div class="rv-cert-name">Shining Star — R&amp;R Award</div><div class="rv-cert-issuer">UST HealthProof · 2024</div></div>
+            </div>
+            <div class="rv-cert-item">
+              <span style="color:var(--accent);font-size:.85rem;flex-shrink:0;margin-top:2px"><i class="fas fa-rocket"></i></span>
+              <div><div class="rv-cert-name">20% Scalability Improvement</div><div class="rv-cert-issuer">Stradegi Solutions</div></div>
+            </div>
+            <div class="rv-cert-item">
+              <span style="color:var(--accent);font-size:.85rem;flex-shrink:0;margin-top:2px"><i class="fas fa-bolt"></i></span>
+              <div><div class="rv-cert-name">30% Performance Boost</div><div class="rv-cert-issuer">Stradegi Solutions</div></div>
+            </div>
+            <div class="rv-cert-item">
+              <span style="color:var(--accent);font-size:.85rem;flex-shrink:0;margin-top:2px"><i class="fas fa-bug"></i></span>
+              <div><div class="rv-cert-name">25% Bug Reduction</div><div class="rv-cert-issuer">Stradegi Solutions</div></div>
+            </div>
+          </div>
+
+          <div class="rv-section">
+            <div class="rv-section-title sidebar">Strengths</div>
+            <div class="rv-cert-item">
+              <span style="color:var(--accent);font-size:.85rem;flex-shrink:0;margin-top:2px"><i class="fas fa-layer-group"></i></span>
+              <div><div class="rv-cert-name">Technology Adaptability</div><div class="rv-cert-issuer">Quick learner across stacks</div></div>
+            </div>
+            <div class="rv-cert-item">
+              <span style="color:var(--accent);font-size:.85rem;flex-shrink:0;margin-top:2px"><i class="fas fa-users"></i></span>
+              <div><div class="rv-cert-name">Team Collaboration</div><div class="rv-cert-issuer">Cross-functional teamwork</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <div class="contact-grid" data-aos="fade-up" data-aos-duration="700">
+      <div>
+        <p class="section-label">Get in Touch</p>
+        <h2 class="section-title">Let's <span class="accent">Work Together</span></h2>
+        <p class="contact-desc">Open to full-time roles and exciting product opportunities. Whether you need a backend Java engineer, a full stack developer, or want to discuss collaboration — I'd love to hear from you.</p>
+        <div class="contact-info-list">
+          <a href="/cdn-cgi/l/email-protection#493a283d21203a212b28253c2a3a092e24282025672a2624" class="contact-info-item"><div class="ci-icon"><i class="fas fa-envelope"></i></div><div><div class="ci-label">Email</div><div class="ci-value"><span class="__cf_email__" data-cfemail="d3a0b2a7bbbaa0bbb1b2bfa6b0a093b4beb2babffdb0bcbe">[email&#160;protected]</span></div></div></a>
+          <a href="tel:+918825871070" class="contact-info-item"><div class="ci-icon"><i class="fas fa-phone"></i></div><div><div class="ci-label">Phone</div><div class="ci-value">+91 88258 71070</div></div></a>
+          <div class="contact-info-item"><div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div><div><div class="ci-label">Location</div><div class="ci-value">Chennai, Tamil Nadu, India</div></div></div>
+        </div>
+        <div class="social-row">
+          <a href="https://github.com/sathishboobalan" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/sathishboobalan/" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="/cdn-cgi/l/email-protection#0b786a7f63627863696a677e68784b6c666a626725686466" class="social-btn"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="contact-form-wrap">
+        <div class="success-msg" id="successMsg" style="display:none"><i class="fas fa-check-circle ok"></i><div><strong>Message sent!</strong><p>Thanks for reaching out. I'll get back to you within 24 hours.</p></div></div>
+        <form class="contact-form" id="contactForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group"><label>Your Name</label><input type="text" placeholder="John Doe" required></div>
+            <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com" required></div>
+          </div>
+          <div class="form-group"><label>Subject</label><input type="text" placeholder="Project Inquiry / Full-time Role"></div>
+          <div class="form-group"><label>Message</label><textarea rows="5" placeholder="Tell me about your project or opportunity..." required></textarea></div>
+          <button type="submit" class="btn-primary submit-btn" id="submitBtn"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo"><span class="lb">&lt;</span>SB<span class="lb">/&gt;</span></div>
+        <p class="footer-tagline">Full Stack Developer</p>
+        <div class="footer-socials">
+          <a href="https://github.com/sathishboobalan" target="_blank"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/sathishboobalan/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="/cdn-cgi/l/email-protection#3f4c5e4b57564c575d5e534a5c4c7f58525e5653115c5052"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-nav-title">Quick Links</div>
+        <ul>
+          <li><button onclick="navTo('home')">Home</button></li>
+          <li><button onclick="navTo('about')">About</button></li>
+          <li><button onclick="navTo('skills')">Skills</button></li>
+          <li><button onclick="navTo('experience')">Experience</button></li>
+          <li><button onclick="navTo('projects')">Projects</button></li>
+          <li><button onclick="navTo('testimonials')">Reviews</button></li>
+          <li><button onclick="navTo('resume')">Resume</button></li>
+          <li><button onclick="navTo('contact')">Contact</button></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-nav-title">Contact</div>
+        <div class="fc-item"><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="502331243839233832313c25332310373d31393c7e333f3d">[email&#160;protected]</a></div>
+        <div class="fc-item"><i class="fas fa-phone"></i> +91 88258 71070</div>
+        <div class="fc-item"><i class="fas fa-map-marker-alt"></i> Chennai, Tamil Nadu</div>
+        <div class="fc-item available"><span class="footer-dot"></span> Available for opportunities</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span class="accent">Sathish Boobalan</span>. All rights reserved.</p>
+      <p class="footer-credit">Full Stack Developer</p>
+    </div>
+  </div>
+</footer>
+
+
+  <!-- AOS JS (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <!-- Portfolio JS -->
+  <script src="js/main.js"></script>
+</body>
+</html>
